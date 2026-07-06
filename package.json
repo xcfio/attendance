@@ -1,8 +1,16 @@
 {
-    "name": "Attendance",
+    "name": "attendance",
     "author": "xcfio",
-    "homepage": "https://github.com/xcfio/Attendance#readme",
+    "homepage": "https://github.com/xcfio/attendance#readme",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/xcfio/attendance"
+    },
+    "bugs": {
+        "url": "https://github.com/xcfio/attendance/issues",
+        "email": "xcfio@proton.me"
+    },
     "scripts": {
         "build": "next build",
         "dev": "next dev --port=7700",
@@ -14,6 +22,7 @@
         "start": "next start",
         "test": "tsc --noEmit"
     },
+    "packageManager": "pnpm@11.10.0",
     "dependencies": {
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
