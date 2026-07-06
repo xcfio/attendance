@@ -1,0 +1,69 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-04-14T05:21:28.326Z",
+      "updatedAt": "2026-04-14T05:21:28.326Z"
+    },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/shadcn/ui.git",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "skillFolderHash": "a7903e883aaeead6ed509468b499310729968ad9",
+      "installedAt": "2026-04-15T10:43:56.374Z",
+      "updatedAt": "2026-04-15T10:43:56.374Z"
+    },
+    "nextjs": {
+      "source": "vercel-labs/vercel-plugin",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/vercel-plugin.git",
+      "skillPath": "skills/nextjs/SKILL.md",
+      "skillFolderHash": "052ae1b11599c44b21fd6eacb9060f4caa51aac8",
+      "installedAt": "2026-04-15T10:45:04.832Z",
+      "updatedAt": "2026-04-15T10:45:04.832Z"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-15T10:47:17.593Z",
+      "updatedAt": "2026-04-15T10:47:17.593Z"
+    },
+    "recharts": {
+      "source": "ansanabria/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ansanabria/skills.git",
+      "skillPath": "skills/recharts/SKILL.md",
+      "skillFolderHash": "2f3af42f8552f6e2edc06fb22d5785b0686004b7",
+      "installedAt": "2026-04-15T10:49:20.404Z",
+      "updatedAt": "2026-04-15T10:49:20.404Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "antigravity-cli",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed"
+  ]
+}

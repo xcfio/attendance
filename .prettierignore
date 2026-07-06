@@ -1,0 +1,4 @@
+pnpm*.yaml
+log.*
+!log.ts
+.agents
