@@ -51,7 +51,11 @@ function DatePicker({
                     )}
                 >
                     <CalendarIcon />
-                    {selected ? selected.toLocaleString(undefined, { dateStyle: "long" }) : <span>{placeholder}</span>}
+                    {selected ? (
+                        selected.toLocaleString("en-UK", { day: "2-digit", month: "2-digit", year: "numeric" })
+                    ) : (
+                        <span>{placeholder}</span>
+                    )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

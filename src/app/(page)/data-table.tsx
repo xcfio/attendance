@@ -25,6 +25,7 @@ export function DataTable<TData, TValue>({
         columns,
         getCoreRowModel: getCoreRowModel(),
         onRowSelectionChange,
+        enableRowSelection: true,
         getRowId,
         state: {
             ...(rowSelection !== undefined ? { rowSelection } : {})
