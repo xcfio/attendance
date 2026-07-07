@@ -1,16 +1,17 @@
 "use client"
 
-import { columns, Student } from "./columns"
-import { DataTable } from "./data-table"
-import { student } from "@/text/students"
-import { Subject } from "@/text/subject"
-import { CurrentStudent } from "@/text/current-student"
-import { useState, useMemo } from "react"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { DatePicker } from "@/components/ui/date-picker"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Field, FieldContent } from "@/components/ui/field"
+import { DatePicker } from "@/components/ui/date-picker"
+import { CurrentStudent } from "@/text/current-student"
+import { Button } from "@/components/ui/button"
+import { columns, Student } from "./columns"
+import { useState, useMemo } from "react"
+import { student } from "@/text/students"
+import { Subject } from "@/text/subject"
+import { DataTable } from "./data-table"
+import { toast } from "sonner"
 
 function getStudentData(): Student[] {
     const list: Student[] = []
@@ -34,10 +35,9 @@ function getStudentData(): Student[] {
 function getSubjectData(): Array<[number, string]> {
     const subject: Array<[number, string]> = []
 
-    for (const [_semester, department] of Subject) {
-        for (const [code, name] of department) {
-            subject.push([code, name])
-        }
+    for (const [semester, department] of Subject) {
+        if (semester !== 3) continue
+        for (const [code, name] of department) subject.push([code, name])
     }
 
     return subject
@@ -46,9 +46,32 @@ function getSubjectData(): Array<[number, string]> {
 export default function StudentPage() {
     const [date, setDate] = useState<Temporal.PlainDate | undefined>(Temporal.Now.plainDateISO())
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
-    const [_selectedSubject, setSelectedSubject] = useState<string>("")
+    const [selectedSubject, setSelectedSubject] = useState<string>("")
     const data = useMemo(() => getStudentData(), [])
 
+    async function copy() {
+        const id = toast.loading("Copying...")
+        try {
+            const subject = selectedSubject
+            const time = date?.toLocaleString("en-UK", { day: "2-digit", month: "2-digit", year: "numeric" })
+            const student = data.filter((row) => rowSelection[row.roll])
+
+            const header = `Date: ${time}\n${subject ? `Subject: ${subject}` : ""}`
+
+            const textArray = [
+                "-".padEnd(subject.length + 9, "-"),
+                header,
+                "-".padEnd(subject.length + 9, "-"),
+                ...student.map((row) => row.roll)
+            ]
+
+            await navigator.clipboard.writeText(textArray.join("\n"))
+            toast.success("Copied to clipboard!", { id })
+        } catch (error) {
+            console.trace(error)
+            toast.error("Failed to copy to clipboard!", { id })
+        }
+    }
     return (
         <div className="w-full flex flex-1 items-center justify-center">
             <Card className="[--card-spacing:--spacing(4)]! sm:[--card-spacing:--spacing(6)]! m-2 md:m-4 lg:m-8 xl:m-16 max-w-4xl flex flex-1">
@@ -65,7 +88,7 @@ export default function StudentPage() {
                                     <SelectContent className="w-full">
                                         <SelectGroup>
                                             {getSubjectData().map(([code, subject]) => (
-                                                <SelectItem key={code} value={code.toString()}>
+                                                <SelectItem key={code} value={`${code} - ${subject}`}>
                                                     {`${code} - ${subject}`}
                                                 </SelectItem>
                                             ))}
@@ -97,10 +120,11 @@ export default function StudentPage() {
                     />
                 </CardContent>
                 <CardFooter className="flex flex-row justify-start items-start gap-2">
-                    <Button variant="default" className="w-fit">
+                    <Button disabled variant="default" className="w-fit">
                         Save
                     </Button>
-                    <Button variant="default" className="w-fit">
+                    {/* oxlint-disable-next-line typescript/no-misused-promises */}
+                    <Button variant="default" className="w-fit" onClick={copy}>
                         Copy
                     </Button>
                 </CardFooter>

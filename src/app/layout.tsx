@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         }
     },
     alternates: {
-        canonical: "https://attendance-xcfio.netlify.app"
+        canonical: "https://attendance-cst.netlify.app"
     },
     icons: {
         icon: [
@@ -68,12 +68,12 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Class Attendance",
         description: "A presentation on the Class Attendance tracking system.",
-        url: "https://attendance-xcfio.netlify.app",
+        url: "https://attendance-cst.netlify.app",
         siteName: "Class Attendance",
         type: "website",
         images: [
             {
-                url: "https://attendance-xcfio.netlify.app/icon.png",
+                url: "https://attendance-cst.netlify.app/icon.png",
                 width: 512,
                 height: 512,
                 alt: "Class Attendance Presentation Logo"
