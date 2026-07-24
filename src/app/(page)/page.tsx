@@ -116,8 +116,7 @@ export default function StudentPage() {
         const subject = selectedSubject
         const time = date?.toLocaleString("en-UK", { day: "2-digit", month: "2-digit", year: "numeric" })
         const student = data.filter((row) => rowSelection[row.roll])
-
-        const header = `Date: ${time}\n${subject ? `Subject: ${subject}` : ""}`
+        const header = `Date: ${time}${subject ? `\nSubject: ${subject}` : ""}`
 
         const textArray = [
             "-".padEnd(subject.length + 9, "-"),
@@ -148,7 +147,7 @@ export default function StudentPage() {
         const id = toast.loading("Saving...")
         try {
             const { text, subject, time } = buildContent()
-            const datePart = time?.replaceAll("_", "-") ?? "unknown-date"
+            const datePart = time?.replaceAll("/", "-") ?? "unknown-date"
             const subjectPart = subject ? subject.replace(/[<>:"/\\|?*]+/gu, "-").trim() : "No-Subject"
             const filename = `${datePart} - ${subjectPart}.txt`
 
