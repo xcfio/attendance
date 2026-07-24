@@ -31,10 +31,6 @@ jobs:
             - name: Install dependencies
               run: (pnpm install --no-frozen-lockfile) || true
 
-            # Disable Turbo Telemetry to prevent potential issues in CI environment
-            - name: Disable Turbo Telemetry
-              run: pnpm exec turbo telemetry disable > /dev/null 2>&1 && echo "Turbo Telemetry disabled"
-
             # Run test
             - name: Run test
               run: node --run test
