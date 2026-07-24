@@ -32,11 +32,13 @@ function getStudentData(): Student[] {
     return list.sort((a, b) => a.roll.localeCompare(b.roll))
 }
 
+const Semester = Number(process.env.NEXT_PUBLIC_SEMESTER) as 1 | 2 | 3 | 4 | 5 | 6 | 7
+
 function getSubjectData(): Array<[number, string]> {
     const subject: Array<[number, string]> = []
 
     for (const [semester, department] of Subject) {
-        if (semester !== 3) continue
+        if (semester !== Semester) continue
         for (const [code, name] of department) subject.push([code, name])
     }
 
