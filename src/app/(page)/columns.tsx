@@ -14,23 +14,25 @@ export type Student = {
     isCurrent: boolean
 }
 
-function IndeterminateCheckbox({
+export function IndeterminateCheckbox({
     indeterminate,
     className = "",
+    checked = false,
     ...rest
 }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
     const ref = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         if (ref.current && typeof indeterminate === "boolean") {
-            ref.current.indeterminate = !rest.checked && indeterminate
+            ref.current.indeterminate = !checked && indeterminate
         }
-    }, [ref, indeterminate, rest.checked])
+    }, [ref, indeterminate, checked])
 
     return (
         <input
             type="checkbox"
             ref={ref}
+            checked={checked}
             className={
                 className + " h-4 w-4 rounded border-input text-primary focus:ring-ring accent-primary cursor-pointer"
             }

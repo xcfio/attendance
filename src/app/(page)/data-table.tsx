@@ -1,5 +1,6 @@
-// oxlint-disable no-negated-condition typescript/no-unsafe-assignment
 "use client"
+// oxlint-disable no-negated-condition typescript/no-unsafe-assignment
+import React from "react"
 
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
 
@@ -11,6 +12,7 @@ interface DataTableProps<TData, TValue> {
     rowSelection?: Record<string, boolean>
     onRowSelectionChange?: any
     getRowId?: (row: TData) => string
+    extraRows?: React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
@@ -18,7 +20,8 @@ export function DataTable<TData, TValue>({
     data,
     rowSelection,
     onRowSelectionChange,
-    getRowId
+    getRowId,
+    extraRows
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -53,7 +56,12 @@ export function DataTable<TData, TValue>({
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map((row) => (
-                            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                            <TableRow
+                                key={row.id}
+                                data-state={row.getIsSelected() && "selected"}
+                                onClick={row.getToggleSelectedHandler()}
+                                className="cursor-pointer"
+                            >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -68,6 +76,7 @@ export function DataTable<TData, TValue>({
                             </TableCell>
                         </TableRow>
                     )}
+                    {extraRows}
                 </TableBody>
             </Table>
         </div>
