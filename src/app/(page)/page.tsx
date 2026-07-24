@@ -112,30 +112,58 @@ export default function StudentPage() {
     }
     const data = useMemo(() => getStudentData(), [])
 
+    function buildContent() {
+        const subject = selectedSubject
+        const time = date?.toLocaleString("en-UK", { day: "2-digit", month: "2-digit", year: "numeric" })
+        const student = data.filter((row) => rowSelection[row.roll])
+
+        const header = `Date: ${time}\n${subject ? `Subject: ${subject}` : ""}`
+
+        const textArray = [
+            "-".padEnd(subject.length + 9, "-"),
+            header,
+            "-".padEnd(subject.length + 9, "-"),
+            ...student.map((row) => row.roll),
+            ...extraStudents
+                .filter((e) => e.roll.trim() !== "" && rowSelection[e.roll.trim()])
+                .map((e) => e.roll.trim())
+        ]
+
+        return { text: textArray.join("\n"), subject, time }
+    }
+
     async function copy() {
         const id = toast.loading("Copying...")
         try {
-            const subject = selectedSubject
-            const time = date?.toLocaleString("en-UK", { day: "2-digit", month: "2-digit", year: "numeric" })
-            const student = data.filter((row) => rowSelection[row.roll])
-
-            const header = `Date: ${time}\n${subject ? `Subject: ${subject}` : ""}`
-
-            const textArray = [
-                "-".padEnd(subject.length + 9, "-"),
-                header,
-                "-".padEnd(subject.length + 9, "-"),
-                ...student.map((row) => row.roll),
-                ...extraStudents
-                    .filter((e) => e.roll.trim() !== "" && rowSelection[e.roll.trim()])
-                    .map((e) => e.roll.trim())
-            ]
-
-            await navigator.clipboard.writeText(textArray.join("\n"))
+            const { text } = buildContent()
+            await navigator.clipboard.writeText(text)
             toast.success("Copied to clipboard!", { id })
         } catch (error) {
             console.trace(error)
             toast.error("Failed to copy to clipboard!", { id })
+        }
+    }
+
+    function save() {
+        const id = toast.loading("Saving...")
+        try {
+            const { text, subject, time } = buildContent()
+            const datePart = time?.replaceAll("_", "-") ?? "unknown-date"
+            const subjectPart = subject ? subject.replace(/[<>:"/\\|?*]+/gu, "-").trim() : "No-Subject"
+            const filename = `${datePart} - ${subjectPart}.txt`
+
+            const blob = new Blob([text], { type: "text/plain" })
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement("a")
+            a.href = url
+            a.download = filename
+            a.click()
+            URL.revokeObjectURL(url)
+
+            toast.success(`Saved as ${filename}`, { id })
+        } catch (error) {
+            console.trace(error)
+            toast.error("Failed to save file!", { id })
         }
     }
     return (
@@ -237,7 +265,7 @@ export default function StudentPage() {
                     />
                 </CardContent>
                 <CardFooter className="flex flex-row justify-start items-start gap-2">
-                    <Button disabled variant="default" className="w-fit">
+                    <Button variant="default" className="w-fit" onClick={save}>
                         Save
                     </Button>
                     <Button variant="default" className="w-fit" onClick={() => void copy()}>
