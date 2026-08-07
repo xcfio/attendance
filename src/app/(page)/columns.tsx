@@ -1,23 +1,23 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import { tableFeatures, rowSelectionFeature, type ColumnDef } from "@tanstack/react-table"
 import { useEffect, useRef, HTMLProps } from "react"
 
 export type Student = {
     roll: string
     name: string
     reg: string
-    class: string
-    father: string
-    mother: string
-    subjects: string[]
     isCurrent: boolean
 }
+
+// v9 requires features declared up front; columns/table share this reference
+export const features = tableFeatures({ rowSelectionFeature })
 
 export function IndeterminateCheckbox({
     indeterminate,
     className = "",
     checked = false,
+    onClick,
     ...rest
 }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
     const ref = useRef<HTMLInputElement>(null)
@@ -33,6 +33,10 @@ export function IndeterminateCheckbox({
             type="checkbox"
             ref={ref}
             checked={checked}
+            onClick={(e) => {
+                e.stopPropagation()
+                onClick?.(e)
+            }}
             className={
                 className + " h-4 w-4 rounded border-input text-primary focus:ring-ring accent-primary cursor-pointer"
             }
@@ -41,11 +45,11 @@ export function IndeterminateCheckbox({
     )
 }
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<typeof features, Student>[] = [
     {
         id: "select",
         header: ({ table }) => (
-            <div className="flex items-center px-1">
+            <div className="flex items-center px-1" onClick={(e) => e.stopPropagation()}>
                 <IndeterminateCheckbox
                     checked={table.getIsAllPageRowsSelected()}
                     indeterminate={table.getIsSomePageRowsSelected()}
@@ -54,16 +58,14 @@ export const columns: ColumnDef<Student>[] = [
             </div>
         ),
         cell: ({ row }) => (
-            <div className="flex items-center px-1">
+            <div className="flex items-center px-1" onClick={(e) => e.stopPropagation()}>
                 <IndeterminateCheckbox
                     checked={row.getIsSelected()}
                     disabled={!row.getCanSelect()}
                     onChange={row.getToggleSelectedHandler()}
                 />
             </div>
-        ),
-        enableSorting: false,
-        enableHiding: false
+        )
     },
     {
         accessorKey: "roll",

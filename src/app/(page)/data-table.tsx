@@ -1,37 +1,28 @@
 "use client"
-// oxlint-disable no-negated-condition typescript/no-unsafe-assignment
-import React from "react"
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import React from "react"
+import { useTable, flexRender, type RowSelectionState, type OnChangeFn } from "@tanstack/react-table"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { columns, features, type Student } from "./columns"
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
-    data: TData[]
-    rowSelection?: Record<string, boolean>
-    onRowSelectionChange?: any
-    getRowId?: (row: TData) => string
+interface DataTableProps {
+    data: Student[]
+    rowSelection?: RowSelectionState
+    onRowSelectionChange?: OnChangeFn<RowSelectionState>
     extraRows?: React.ReactNode
 }
 
-export function DataTable<TData, TValue>({
-    columns,
-    data,
-    rowSelection,
-    onRowSelectionChange,
-    getRowId,
-    extraRows
-}: DataTableProps<TData, TValue>) {
-    const table = useReactTable({
-        data,
+export function DataTable({ data, rowSelection, onRowSelectionChange, extraRows }: DataTableProps) {
+    const table = useTable<typeof features, Student>({
+        features,
         columns,
-        getCoreRowModel: getCoreRowModel(),
+        data,
         onRowSelectionChange,
         enableRowSelection: true,
-        getRowId,
+        getRowId: (row) => row.roll,
         state: {
-            ...(rowSelection !== undefined ? { rowSelection } : {})
+            ...(rowSelection === undefined ? {} : { rowSelection })
         }
     })
 
@@ -41,15 +32,13 @@ export function DataTable<TData, TValue>({
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(header.column.columnDef.header, header.getContext())}
-                                    </TableHead>
-                                )
-                            })}
+                            {headerGroup.headers.map((header) => (
+                                <TableHead key={header.id}>
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(header.column.columnDef.header, header.getContext())}
+                                </TableHead>
+                            ))}
                         </TableRow>
                     ))}
                 </TableHeader>
@@ -62,7 +51,7 @@ export function DataTable<TData, TValue>({
                                 onClick={row.getToggleSelectedHandler()}
                                 className="cursor-pointer"
                             >
-                                {row.getVisibleCells().map((cell) => (
+                                {row.getAllCells().map((cell) => (
                                     <TableCell key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
