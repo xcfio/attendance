@@ -22,7 +22,6 @@
         "start": "next start",
         "test": "tsc --noEmit"
     },
-    "packageManager": "pnpm@11.20.0",
     "dependencies": {
         "@tanstack/react-table": "^9.0.0",
         "class-variance-authority": "^0.7.1",
@@ -55,5 +54,9 @@
         "prettier": "^3.9.6",
         "tailwindcss": "^4.3.3",
         "typescript": "^7.0.2"
+    },
+    "packageManager": "pnpm@11.20.0",
+    "engines": {
+        "node": ">=26"
     }
 }
