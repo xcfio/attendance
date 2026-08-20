@@ -82,8 +82,8 @@ importers:
         specifier: ^1.78.0
         version: 1.78.0(oxlint-tsgolint@7.0.2001)
       oxlint-plugin-eslint:
-        specifier: ^1.77.0
-        version: 1.77.0
+        specifier: ^1.78.0
+        version: 1.78.0
       oxlint-tsgolint:
         specifier: ^7.0.2001
         version: 7.0.2001
@@ -2679,8 +2679,8 @@ packages:
     resolution: {integrity: sha512-weP+BZ8MVNnlCm8c0Qdc1WSWq4Qn7I+9CJGm7Qali6g44e/PUzbjNqJX5NJ9ljlNMosfJvg1fKEGILklK9cwnw==}
     engines: {node: '>=18'}
 
-  oxlint-plugin-eslint@1.77.0:
-    resolution: {integrity: sha512-9IMswrFzZPY/OZruaz17W7O8aohZhByTggPEzSfOzrQIIK6ko4fFjR8Nus3HlcUhraQ52stEU06993GHWTeNFA==}
+  oxlint-plugin-eslint@1.78.0:
+    resolution: {integrity: sha512-+dusYOpyXDTYVBLfn/ns5yM0JMfOrQuoJkPSFbcE+Iow7lC4i90lwYXExYB1ZBCK9vJrFW4bCE9ufN/LgRL9VQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   oxlint-tsgolint@7.0.2001:
@@ -5618,7 +5618,7 @@ snapshots:
       string-width: 7.2.0
       strip-ansi: 7.2.0
 
-  oxlint-plugin-eslint@1.77.0: {}
+  oxlint-plugin-eslint@1.78.0: {}
 
   oxlint-tsgolint@7.0.2001:
     optionalDependencies:
