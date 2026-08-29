@@ -46,7 +46,7 @@
         "@tailwindcss/postcss": "^4.3.3",
         "@types/react": "^19.2.18",
         "@types/react-dom": "^19.2.4",
-        "commitlint": "^21.2.1",
+        "commitlint": "^21.2.2",
         "lefthook": "^2.1.10",
         "oxlint": "^1.80.0",
         "oxlint-plugin-eslint": "^1.78.0",
