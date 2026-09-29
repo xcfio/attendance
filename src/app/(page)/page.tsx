@@ -5,7 +5,6 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Field, FieldContent } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { DatePicker } from "@/components/ui/date-picker"
-import { CurrentStudent } from "@/text/current-student"
 import { Button } from "@/components/ui/button"
 import { Student, IndeterminateCheckbox } from "./columns"
 import { useState, useMemo } from "react"
@@ -20,17 +19,7 @@ import { useAttendanceExport } from "./use-attendance-export"
 const Semester = Number(process.env.NEXT_PUBLIC_SEMESTER) as 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 function getStudentData(): Student[] {
-    const list: Student[] = []
-    student.forEach((value, key) => {
-        if (!CurrentStudent.has(key)) return
-        list.push({
-            roll: value.roll,
-            name: value.name,
-            reg: value.reg,
-            isCurrent: true
-        })
-    })
-    return list.sort((a, b) => a.roll.localeCompare(b.roll))
+    return student.map((s) => ({ roll: String(s.roll), name: s.name })).sort((a, b) => a.roll.localeCompare(b.roll))
 }
 
 function getSubjectData(): Array<[number, string]> {

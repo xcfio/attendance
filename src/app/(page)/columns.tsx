@@ -6,8 +6,6 @@ import { useEffect, useRef, HTMLProps } from "react"
 export type Student = {
     roll: string
     name: string
-    reg: string
-    isCurrent: boolean
 }
 
 // v9 requires features declared up front; columns/table share this reference

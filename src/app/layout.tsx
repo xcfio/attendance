@@ -6,7 +6,7 @@ import { Fira_Code, Comfortaa } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "next-themes"
 import { Metadata } from "next"
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 import { Suspense } from "react"
 import "./globals.css"
 
